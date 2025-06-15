@@ -21,48 +21,26 @@ const server = new McpServer({
   instructions: `
 Foundry MCP Server - Comprehensive EVM-compatible blockchains (Ethereum, Optimism, etc.,) development toolkit integration
 
-🔧 **Core Tools Available:**
-- **Cast**: EVM RPC client for blockchain interaction (calls, transactions, balances, receipts, chain info)
-- **Anvil**: Local reth test node management (start/stop/status)
-- **Forge**: Smart contract development framework (script execution, project management)
-- **File Management**: Solidity file creation and workspace operations
-- **Utilities**: Unit conversion, address computation, contract analysis
+Core Tools Available:
+Cast: EVM RPC client for blockchain interaction (calls, transactions, balances, receipts, chain info)
+Anvil: Local reth test node management (start/stop/status)
+Forge: Smart contract development framework (script execution, project management)
+File Management: Solidity file creation and workspace operations
+Utilities: Unit conversion, address computation, contract analysis
 
-📁 **Workspace:** Persistent development environment at ~/.mcp-foundry-workspace
-🌐 **Networks:** Supports local (Anvil) and remote EVM chains with automatic RPC resolution
-🔐 **Security:** Optional private key integration for transaction signing (development use)
+Workspace: Persistent development environment at ~/.mcp-foundry-workspace
+Networks: Supports local (Anvil) and remote EVM chains with automatic RPC resolution
+Security: Optional private key integration for transaction signing (development use)
 
-**Quick Start:**
+Quick Start
 1. Ensure Foundry is installed (~/.foundry/bin/)
 2. Set RPC_URL and PRIVATE_KEY environment variables (optional)
 3. Use tools to deploy, test, and interact with smart contracts
-
-**Resources:**
+Resources
 - anvil://status - Live Anvil node status and configuration
 - contract://{address}/source - Contract source code from Etherscan
   `
 });
-
- const FOUNDRY_WORKSPACE = path.join(os.homedir(), '.mcp-foundry-workspace');
-
- async function ensureWorkspaceInitialized() {
-  try {
-     await fs.mkdir(FOUNDRY_WORKSPACE, { recursive: true });
-    
-     const isForgeProject = await fs.access(path.join(FOUNDRY_WORKSPACE, 'foundry.toml'))
-      .then(() => true)
-      .catch(() => false);
-    
-    if (!isForgeProject) {
-       await executeCommand(`cd ${FOUNDRY_WORKSPACE} && ${FOUNDRY_PATHS.forgePath} init --no-git`);
-    }
-    
-    return FOUNDRY_WORKSPACE;
-  } catch (error) {
-    console.error("Error initializing workspace:", error);
-    throw error;
-  }
-}
 
 // Register all resources
 registerAllResources(server);

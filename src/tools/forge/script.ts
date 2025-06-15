@@ -2,30 +2,9 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import * as fs from "fs/promises";
 import * as path from "path";
-import * as os from "os";
 import { checkFoundryInstalled, executeCommand, FOUNDRY_PATHS, FOUNDRY_NOT_INSTALLED_ERROR } from "../../utils/command.js";
 import { resolveRpcUrl } from "../../utils/rpc.js";
-
-const FOUNDRY_WORKSPACE = path.join(os.homedir(), '.mcp-foundry-workspace');
-
-async function ensureWorkspaceInitialized() {
-  try {
-    await fs.mkdir(FOUNDRY_WORKSPACE, { recursive: true });
-    
-    const isForgeProject = await fs.access(path.join(FOUNDRY_WORKSPACE, 'foundry.toml'))
-      .then(() => true)
-      .catch(() => false);
-    
-    if (!isForgeProject) {
-      await executeCommand(`cd ${FOUNDRY_WORKSPACE} && ${FOUNDRY_PATHS.forgePath} init --no-git`);
-    }
-    
-    return FOUNDRY_WORKSPACE;
-  } catch (error) {
-    console.error("Error initializing workspace:", error);
-    throw error;
-  }
-}
+import { ensureWorkspaceInitialized } from "../../utils/workspace.js";
 
 export function registerForgeScriptTool(server: McpServer): void {
   server.tool(
