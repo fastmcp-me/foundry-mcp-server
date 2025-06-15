@@ -49,6 +49,14 @@ This server connects LLM assistants to the Foundry ecosystem, enabling them to:
 - Get event logs
 - Lookup function and event signatures
 
+### Smart Contract Analysis (Heimdall)
+
+- Disassemble EVM bytecode into human-readable opcodes
+- Decode raw calldata without requiring ABI
+- Decompile EVM bytecode to Solidity source code and ABI
+- Generate visual control flow graphs for EVM bytecode
+- Detailed transaction inspection with calldata decoding and trace analysis
+
 ## Usage
 
 The server is designed to be used as an MCP tool provider for MCP Clients. When connected to a client, it enables the clients(claude desktop, cursor, client, etc.,) to perform Solidity and onchain operations directly.
@@ -58,6 +66,7 @@ The server is designed to be used as an MCP tool provider for MCP Clients. When 
 
 - [Node.js v18+](https://nodejs.org)
 - [Foundry toolchain](https://book.getfoundry.sh/) (Forge, Cast, Anvil)
+- [Heimdall-rs](https://github.com/Jon-Becker/heimdall-rs) (for smart contract analysis)
   
 ### Manual Setup
 
@@ -147,6 +156,14 @@ The server maintains a persistent Forge workspace at `~/.mcp-foundry-workspace` 
 - `compute_address`: Compute the address of a contract that would be deployed
 - `contract_size`: Get the bytecode size of a deployed contract
 - `estimate_gas`: Estimate the gas cost of a transaction
+
+### Heimdall Analysis
+
+- `heimdall_disassemble`: Disassemble EVM bytecode into human-readable opcodes
+- `heimdall_decode`: Decode raw calldata without requiring ABI
+- `heimdall_decompile`: Decompile EVM bytecode to Solidity source code and ABI
+- `heimdall_cfg`: Generate visual control flow graph for EVM bytecode
+- `heimdall_inspect`: Detailed inspection of Ethereum transactions
 
 ## Usage in Claude Desktop App 🎯
 
