@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { executeCommand, FOUNDRY_PATHS } from "../../utils/command.js";
-import { getHeimdallOutputDir, HEIMDALL_DEFAULT_OUTPUT_PATH, DEFAULT_RPC_URL, checkHeimdallOrError } from "./utils.js";
+import { getHeimdallOutputDir, HEIMDALL_DEFAULT_OUTPUT_PATH, DEFAULT_RPC_URL, checkHeimdallOrError, ensureDirectoryExists, readOutputFiles } from "./utils.js";
 
 export function registerHeimdallDecompileTool(server: McpServer): void {
   server.tool(
@@ -24,6 +24,8 @@ export function registerHeimdallDecompileTool(server: McpServer): void {
       if (installError) return installError;
 
       const finalOutputDir = getHeimdallOutputDir(outputDir);
+      
+      await ensureDirectoryExists(finalOutputDir);
       
       let command = `${FOUNDRY_PATHS.heimdallPath} decompile "${target}"`;
       
@@ -77,7 +79,8 @@ export function registerHeimdallDecompileTool(server: McpServer): void {
         };
       }
 
-      const resultText = `Decompiled contract ${target} saved to: ${finalOutputDir}\n\n${result.message}`;
+      const fileContents = await readOutputFiles(finalOutputDir, fileName);
+      const resultText = `Decompiled contract ${target}:\nOutput directory: ${finalOutputDir}\n\n${fileContents}`;
 
       return {
         content: [{ 
