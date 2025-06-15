@@ -1,15 +1,13 @@
-import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import * as path from "path";
-import * as fs from "fs/promises";
-import * as os from "os";
 import * as dotenv from "dotenv"
-import { executeCommand, checkFoundryInstalled, FOUNDRY_PATHS } from "./utils/command.js";
+import { checkFoundryInstalled } from "./utils/command.js";
 import { registerAllCastTools } from "./tools/cast/index.js";
 import { registerAllAnvilTools } from "./tools/anvil/index.js";
 import { registerForgeScriptTool } from "./tools/forge/script.js";
 import { registerConvertEthUnitsTool } from "./tools/utils/convert.js";
 import { registerCreateSolidityFileTool } from "./tools/files/create.js";
+import { registerAllHeimdallTools } from "./tools/heimdall/index.js";
 import { registerAllResources } from "./resources/index.js";
 
 dotenv.config();
@@ -25,6 +23,7 @@ Core Tools Available:
 Cast: EVM RPC client for blockchain interaction (calls, transactions, balances, receipts, chain info)
 Anvil: Local reth test node management (start/stop/status)
 Forge: Smart contract development framework (script execution, project management)
+Heimdall: Advanced EVM bytecode analysis toolkit (disassemble, decode, decompile, CFG, dump, inspect)
 File Management: Solidity file creation and workspace operations
 Utilities: Unit conversion, address computation, contract analysis
 
@@ -34,8 +33,9 @@ Security: Optional private key integration for transaction signing (development 
 
 Quick Start
 1. Ensure Foundry is installed (~/.foundry/bin/)
-2. Set RPC_URL and PRIVATE_KEY environment variables (optional)
-3. Use tools to deploy, test, and interact with smart contracts
+2. Install Heimdall for bytecode analysis: curl -L http://get.heimdall.rs | bash && bifrost
+3. Set RPC_URL and PRIVATE_KEY environment variables (optional)
+4. Use tools to deploy, test, and interact with smart contracts
 Resources
 - anvil://status - Live Anvil node status and configuration
 - contract://{address}/source - Contract source code from Etherscan
@@ -59,6 +59,9 @@ registerConvertEthUnitsTool(server);
 
 // Register file management tools
 registerCreateSolidityFileTool(server);
+
+// Register Heimdall tools
+registerAllHeimdallTools(server);
 
 async function startServer() {
   const foundryInstalled = await checkFoundryInstalled();
