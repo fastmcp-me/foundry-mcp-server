@@ -8,12 +8,13 @@ const execAsync = promisify(exec);
 const getBinaryPaths = () => {
   const homeDir = os.homedir();
   const FOUNDRY_BIN = path.join(homeDir, '.foundry', 'bin');
+  const BIFROST_BIN = path.join(homeDir, '.bifrost', 'bin');
   
   return {
     castPath: path.join(FOUNDRY_BIN, "cast"),
     forgePath: path.join(FOUNDRY_BIN, "forge"),
     anvilPath: path.join(FOUNDRY_BIN, "anvil"),
-    heimdallPath: "heimdall", // Assumes heimdall is in PATH after bifrost installation
+    heimdallPath: path.join(BIFROST_BIN, "heimdall"),
     homeDir
   };
 };
