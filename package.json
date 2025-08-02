@@ -1,21 +1,52 @@
 {
-  "name": "foundry-mcp-server",
+  "name": "@pranesh.asp/foundry-mcp-server",
+  "version": "0.1.5",
+  "description": "A EVM-compatible blockchain toolkit for your AI Agents powered by Foundry",
   "module": "src/index.ts",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "foundry-mcp-server": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && chmod +x dist/index.js",
     "start": "node dist/index.js"
+  },
+  "keywords": [
+    "foundry",
+    "ethereum",
+    "evm",
+    "solidity",
+    "mcp",
+    "model-context-protocol",
+    "blockchain",
+    "smart-contracts",
+    "anvil",
+    "cast",
+    "forge",
+    "heimdall"
+  ],
+  "author": "Pranesh ASP",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PraneshASP/foundry-mcp-server.git"
+  },
+  "homepage": "https://github.com/PraneshASP/foundry-mcp-server#readme",
+  "bugs": {
+    "url": "https://github.com/PraneshASP/foundry-mcp-server/issues"
   },
   "devDependencies": {
     "@types/bun": "latest"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
+    "@pranesh.asp/foundry-mcp-server": "^0.1.4",
     "dotenv": "^16.4.7",
+    "typescript": "^5.0.0",
     "zod": "^3.24.2"
   }
 }

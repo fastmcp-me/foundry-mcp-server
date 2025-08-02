@@ -101,7 +101,46 @@ The server is designed to be used as an MCP tool provider for MCP Clients. When 
 
 
 ### Setup using NPM Package
-- Coming soon  
+
+You can now install and run the server directly using npm:
+
+#### Global Installation
+```bash
+npm install -g @pranesh.asp/foundry-mcp-server
+```
+
+#### Direct Usage with npx
+```bash
+npx @pranesh.asp/foundry-mcp-server
+```
+
+#### MCP Client Configuration
+
+**Claude Code**
+
+```bash
+ claude mcp add-json foundry-mcp-server '{"type":"stdio","command":"npx","args":["@pranesh.asp/foundry-mcp-server"],"env":{"RPC_URL": "", ""PRIVATE_KEY":""}}'   
+```
+
+**Other MCP Clients (Cursor, Claude, Windsurf)**
+
+Add to your MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "foundry": {
+      "command": "npx",
+      "args": ["@pranesh.asp/foundry-mcp-server"],
+      "env": {
+        "RPC_URL": "http://localhost:8545",
+        "PRIVATE_KEY": "0x..."
+      }
+    }
+  }
+}
+```
+
 
 #### Configuration
 
